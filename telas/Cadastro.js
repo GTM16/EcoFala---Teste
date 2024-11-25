@@ -1,6 +1,6 @@
 import { Text, SafeAreaView, StyleSheet, TextInput, ScrollView, Alert, TouchableOpacity } from 'react-native';
 import { useState } from 'react';
-import globalStyles from './Styles'; 
+import globalStyles from '../Styles'; 
 
 export default function Cadastro({ navigation }) {
   const [inputs, setInputs] = useState(Array(13).fill(''));

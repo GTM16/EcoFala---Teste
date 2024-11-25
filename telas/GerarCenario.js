@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
-import globalStyles from './Styles';
+import globalStyles from '../Styles';
 
 // Função para chamar a API de IA
 const gerarCenarioIA = async (titulo, descricao) => {

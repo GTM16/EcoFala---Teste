@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import globalStyles from './Styles'; 
+import globalStyles from '../Styles'; 
 
 export default function MainScreen({ navigation }) {
   return (

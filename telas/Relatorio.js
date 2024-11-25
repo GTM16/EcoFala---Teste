@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Text, SafeAreaView, TextInput, View, Button, Alert } from 'react-native';
-import globalStyles from './Styles';
+import globalStyles from '../Styles';
 
 export default function Relatorio() {
   const [relatorio, setRelatorio] = useState(

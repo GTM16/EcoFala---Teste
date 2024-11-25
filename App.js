@@ -1,16 +1,16 @@
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import Login from './Login';
-import Menu from './Menu';
-import Pacientes from './Pacientes'; 
-import Cadastro from './Cadastro';
-import ListarCenario from './ListarCenario'; 
-import GerarCenario from './GerarCenario';
-import Feedback from './Feedback';
-import Relatorio from './Relatorio';
-import ListarRelatorios from './ListarRelatorios';
-import Cenario from './Cenario';
+import Login from './telas/Login';
+import Menu from './telas/Menu';
+import Pacientes from './telas//Pacientes'; 
+import Cadastro from './telas/Cadastro';
+import ListarCenario from './telas/ListarCenario'; 
+import GerarCenario from './telas/GerarCenario';
+import Feedback from './telas/Feedback';
+import Relatorio from './telas/Relatorio';
+import ListarRelatorios from './telas/ListarRelatorios';
+import Cenario from './telas/Cenario';
 
 const Stack = createStackNavigator();
 

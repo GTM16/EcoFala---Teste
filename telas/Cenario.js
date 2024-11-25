@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Text, SafeAreaView, Image, Button, View, Alert, ScrollView } from 'react-native';
-import globalStyles from './Styles';
+import globalStyles from '../Styles';
 
 const storyParts = [
   {

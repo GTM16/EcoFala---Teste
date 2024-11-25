@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import CenarioCard from './CenarioCard';
-import globalStyles from './Styles'; 
+import globalStyles from '../Styles'; 
 
 const cenarios = [
   {

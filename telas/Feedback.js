@@ -1,6 +1,6 @@
 import { Text, SafeAreaView, TextInput, ScrollView, Button, Alert, TouchableOpacity } from 'react-native';
 import { useState } from 'react';
-import globalStyles from './Styles'; 
+import globalStyles from '../Styles'; 
 
 export default function Feedback() {
   const [inputs, setInputs] = useState(Array(6).fill(''));

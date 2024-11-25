@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, FlatList, Image, TouchableOpacity } from 'react-native';
-import globalStyles from './Styles'; 
+import globalStyles from '../Styles'; 
 
 const pacientes = [
   { id: '1', nome: 'Paciente 1', foto: 'https://via.placeholder.com/100' },

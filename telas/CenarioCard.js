@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
-import globalStyles from './Styles'; 
+import globalStyles from '../Styles'; 
 
 export default function CenarioCard({ titulo, descricao }) {
   return (
