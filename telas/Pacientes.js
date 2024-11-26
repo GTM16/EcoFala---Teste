@@ -3,9 +3,9 @@ import { View, Text, FlatList, Image, TouchableOpacity } from 'react-native';
 import globalStyles from '../Styles'; 
 
 const pacientes = [
-  { id: '1', nome: 'Paciente 1', foto: 'https://via.placeholder.com/100' },
-  { id: '2', nome: 'Paciente 2', foto: 'https://via.placeholder.com/100' },
-  { id: '3', nome: 'Paciente 3', foto: 'https://via.placeholder.com/100' },
+  { id: '1', nome: 'Paciente 1', foto: 'https://placehold.co/100.jpg' },
+  { id: '2', nome: 'Paciente 2', foto: 'https://placehold.co/100.jpg' },
+  { id: '3', nome: 'Paciente 3', foto: 'https://placehold.co/100.jpg' },
 ];
 
 const Pacientes = ({ navigation }) => {
