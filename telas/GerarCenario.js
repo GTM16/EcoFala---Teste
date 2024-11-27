@@ -9,7 +9,6 @@ const gerarCenarioIA = async (titulo, descricao) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-       
       },
       body: JSON.stringify({
         prompt: `Crie um cenário de conversa com o título "${titulo}" e a descrição "${descricao}".`,
@@ -17,7 +16,11 @@ const gerarCenarioIA = async (titulo, descricao) => {
     });
 
     const data = await response.json();
-    return data.cenario;
+    if (data.cenario) {
+      return data.cenario;
+    } else {
+      throw new Error('Cenário não encontrado na resposta');
+    }
   } catch (error) {
     console.error('Erro ao chamar a API:', error);
     throw error;
@@ -38,8 +41,8 @@ export default function GerarCenario() {
     try {
       const cenario = await gerarCenarioIA(titulo, descricao);
       setCenarioGerado(cenario);
-      setTitulo('');
-      setDescricao('');
+      setTitulo(''); // Limpa o campo após gerar o cenário
+      setDescricao(''); // Limpa o campo após gerar o cenário
     } catch (error) {
       Alert.alert('Erro', 'Não foi possível gerar o cenário. Tente novamente.');
     }

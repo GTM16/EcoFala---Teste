@@ -96,7 +96,8 @@ const globalStyles = StyleSheet.create({
   pacienteContainer: {
     alignItems: 'center',
     marginBottom: 15,
-  },
+    justifyContent: 'center', // Certifica-se de que o conteúdo é centralizado corretamente
+  },  
   pacienteFoto: {
     width: 100,
     height: 100,

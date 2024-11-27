@@ -1,59 +1,109 @@
-import { Text, SafeAreaView, StyleSheet, TextInput, ScrollView, Alert, TouchableOpacity } from 'react-native';
-import { useState } from 'react';
-import globalStyles from '../Styles'; 
+import React, { useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, Alert, ScrollView, Image } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
+import AsyncStorage from '@react-native-async-storage/async-storage'; 
+import globalStyles from '../Styles';
 
-export default function Cadastro({ navigation }) {
-  const [inputs, setInputs] = useState(Array(13).fill(''));
+const labels = [
+  "Nome completo",
+  "Data de nascimento",
+  "Sexo",
+  "Endereço",
+  "Contato de emergência",
+  "Diagnóstico",
+  "Comorbidades",
+  "Alergias e restrições alimentares",
+  "Histórico médico",
+  "Medicações",
+  "Sensibilidades",
+  "Habilidades de comunicação",
+  "Habilidades sociais"
+];
 
-  const handleInputChange = (text, index) => {
-    const updatedInputs = [...inputs];
-    updatedInputs[index] = text;
-    setInputs(updatedInputs);
+const Cadastro = ({ navigation, route }) => {
+  const [formData, setFormData] = useState({});
+  const [foto, setFoto] = useState(null);
+  const [nome, setNome] = useState('');
+
+  const pickImage = async () => {
+    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (!permissionResult.granted) {
+      Alert.alert('Permissão necessária', 'Permita o acesso à galeria para selecionar uma imagem.');
+      return;
+    }
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setFoto(result.assets[0].uri);
+    }
   };
 
-  const handleSubmit = () => {
-    Alert.alert('Cadastro', `Dados cadastrados com sucesso:\n${inputs.join(', ')}`);
-    navigation.navigate('Pacientes'); // Navega para a tela de Pacientes após o cadastro
+  const handleChange = (field, value) => {
+    setFormData({ ...formData, [field]: value });
+    if (field === 'nomeCompleto') {
+      setNome(value); // Atualiza o nome para exibição abaixo da foto
+    }
   };
 
-  const labels = [
-    "Nome completo",
-    "Data de nascimento",
-    "Sexo",
-    "Endereço",
-    "Contato de emergência",
-    "Diagnóstico",
-    "Comorbidades",
-    "Alergias e restrições alimentares",
-    "Histórico médico",
-    "Medicações",
-    "Sensibilidades",
-    "Habilidades de comunicação",
-    "Habilidades sociais"
-  ];
+  const handleSubmit = async () => {
+    const novoPaciente = { id: Date.now().toString(), ...formData, foto };
+
+    try {
+      const pacientesExistentes = await AsyncStorage.getItem('pacientes');
+      const pacientes = pacientesExistentes ? JSON.parse(pacientesExistentes) : [];
+      pacientes.push(novoPaciente);
+
+      console.log("Pacientes após adição:", pacientes);
+
+      await AsyncStorage.setItem('pacientes', JSON.stringify(pacientes));
+
+      route.params?.atualizarLista?.();
+      navigation.goBack();
+    } catch (error) {
+      console.error("Erro ao salvar paciente:", error); 
+      Alert.alert('Erro', 'Não foi possível salvar os dados do paciente.');
+    }
+  };
 
   return (
-    <SafeAreaView style={globalStyles.cadastroContainer}>
-      <ScrollView contentContainerStyle={globalStyles.scrollContainer}>
+    <ScrollView style={globalStyles.cadastroContainer}>
+      <View style={globalStyles.scrollContainer}>
+        <Text style={globalStyles.paragraph}>Cadastro de Paciente</Text>
+
         {labels.map((label, index) => (
-          <SafeAreaView key={index} style={globalStyles.inputContainer}>
+          <View key={index} style={globalStyles.inputContainer}>
             <Text style={globalStyles.label}>{label}</Text>
             <TextInput
               style={globalStyles.cadastroInput}
-              value={inputs[index]}
-              onChangeText={(text) => handleInputChange(text, index)}
+              placeholder={label}
+              placeholderTextColor="#666"
+              onChangeText={(text) => handleChange(label.toLowerCase().replace(/\s+/g, ''), text)} 
             />
-          </SafeAreaView>
+          </View>
         ))}
 
-        <TouchableOpacity 
-          style={globalStyles.cadastroButton} 
-          onPress={handleSubmit} 
-        >
+        <TouchableOpacity onPress={pickImage} style={globalStyles.cadastroButton}>
+          <Text style={globalStyles.cadastroButtonText}>Selecionar Foto</Text>
+        </TouchableOpacity>
+
+        {foto && (
+          <View style={globalStyles.pacienteContainer}>
+            <Image source={{ uri: foto }} style={globalStyles.pacienteFoto} />
+            <Text style={globalStyles.pacienteNome}>{nome}</Text>  {/* Exibe o nome abaixo da foto */}
+          </View>
+        )}
+
+        <TouchableOpacity onPress={handleSubmit} style={globalStyles.cadastroButton}>
           <Text style={globalStyles.cadastroButtonText}>Cadastrar</Text>
         </TouchableOpacity>
-      
-      </ScrollView>
-    </SafeAreaView>
+      </View>
+    </ScrollView>
   );
-}
+};
+
+export default Cadastro;
